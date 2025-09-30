@@ -1,6 +1,9 @@
 // ----=  HANDS  =----
 function prepareInteraction() {
   //bgImage = loadImage('/images/background.png');
+    crabImage = loadImage('images/crabtest.png');
+   bgImage = loadImage('images/background test.png');
+   forefrontImage = loadImage('images/forefront test.png');
 }
 
 function drawInteraction(faces, hands) {
@@ -42,6 +45,26 @@ function drawInteraction(faces, hands) {
     if (showKeypoints) {
       drawPoints(face)
     }
+
+   let leftEyeCenterX = face.leftEye.centerX;
+    let leftEyeCenterY = face.leftEye.centerY;
+    let leftEyeWidth = face.leftEye.width;
+    let leftEyeHeight = face.leftEye.height;
+
+    // Right eye
+    let rightEyeCenterX = face.rightEye.centerX;
+    let rightEyeCenterY = face.rightEye.centerY;
+    let rightEyeWidth = face.rightEye.width;
+    let rightEyeHeight = face.rightEye.height;
+
+
+    let noseTipX = face.keypoints[4].x;
+    let noseTipY = face.keypoints[4].y;
+
+     let testX = face.keypoints[358].x;
+    let testY = face.keypoints[358].y;
+
+
     // console.log(face);
     /*
     Once this program has a face, it knows some things about it.
@@ -57,6 +80,45 @@ function drawInteraction(faces, hands) {
     /*
     Start drawing on the face here
     */
+image(bgImage,0,0,1280,960)
+  strokeWeight(20)
+  stroke(0)
+  line(testX,testY,leftEyeCenterX,leftEyeCenterY)
+
+
+   let eyedist = dist(leftEyeCenterX,leftEyeCenterY,rightEyeCenterX,rightEyeCenterY)
+   console.log(eyedist) //210 and 70
+   let crabSize = map(eyedist,210,70,700,150)
+  
+  push()
+   imageMode(CENTER)
+   image(crabImage,noseTipX,noseTipY+100,crabSize,crabSize)
+  pop()
+
+
+
+
+ strokeWeight(5)
+    fill(255);
+    // fill(get(leftEyeCenterX, leftEyeCenterY))
+     stroke(255,0,0)
+    ellipse(leftEyeCenterX, leftEyeCenterY, leftEyeWidth+20, leftEyeHeight*3);
+    fill(0)
+      noStroke()
+    ellipse(leftEyeCenterX,leftEyeCenterY, 30, leftEyeHeight);
+   //righteye
+    fill(255);
+     stroke(255,0,0)
+    ellipse(rightEyeCenterX, rightEyeCenterY, rightEyeWidth+20, rightEyeHeight*3);
+    fill(0)
+       noStroke()
+    ellipse(rightEyeCenterX,rightEyeCenterY, 30, rightEyeHeight+10);
+
+
+
+
+    image(forefrontImage,0,0,1280,960)
+
 
     // fill(225, 225, 0);
     // ellipse(leftEyeCenterX, leftEyeCenterY, leftEyeWidth, leftEyeHeight);

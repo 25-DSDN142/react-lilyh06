@@ -2,6 +2,9 @@
 /* load images here */
 function prepareInteraction() {
   //bgImage = loadImage('/images/background.png');
+   crabImage = loadImage('images/crabtest.png');
+   bgImage = loadImage('images/background test.png');
+   forefrontImage = loadImage('images/forefront test.png');
 }
 
 function drawInteraction(faces, hands) {
@@ -13,7 +16,7 @@ function drawInteraction(faces, hands) {
     if (showKeypoints) {
       drawPoints(face)
     }
-
+  
     /*
     Once this program has a face, it knows some things about it.
     This includes how to draw a box around the face, and an oval. 
@@ -61,26 +64,90 @@ function drawInteraction(faces, hands) {
 
     let noseTipX = face.keypoints[4].x;
     let noseTipY = face.keypoints[4].y;
+
+    let testX = face.keypoints[358].x;
+    let testY = face.keypoints[358].y;
+
+    let lefttriangleX1 = face.keypoints[448].x;
+    let lefttriangleY1 = face.keypoints[448].y;
+    let lefttriangleX2 = face.keypoints[451].x;
+    let lefttriangleY2 = face.keypoints[451].y;
+    let lefttriangleX3 = face.keypoints[280].x;
+    let lefttriangleY3 = face.keypoints[280].y;
+
+   let righttriangleX1 = face.keypoints[228].x;
+    let righttriangleY1 = face.keypoints[228].y;
+    let righttriangleX2 = face.keypoints[231].x;
+    let righttriangleY2 = face.keypoints[231].y;
+    let righttriangleX3 = face.keypoints[50].x;
+    let righttriangleY3 = face.keypoints[50].y;
+
+    let sideFace = face.keypoints[132].x;
+    let sideFaceY = face.keypoints[97].y;
+
+    let sidefaceRightX = face.keypoints[323].x;
+    let sidefaceRightY = face.keypoints[323].y;
+    let sidefaceLeftX = face.keypoints[93].x;
+    let sidefaceLeftY = face.keypoints[93].x;
+
     /*
     Start drawing on the face here
     */
-    noStroke()
-    fill(225, 225, 0);
+ image(bgImage,0,0,1280,960)
+  strokeWeight(20)
+  stroke(0)
+  line(testX,testY,leftEyeCenterX,leftEyeCenterY)
+
+
+   let eyedist = dist(leftEyeCenterX,leftEyeCenterY,rightEyeCenterX,rightEyeCenterY)
+   console.log(eyedist) //210 and 70
+   let crabSize = map(eyedist,210,70,700,150)
+  
+  push()
+   imageMode(CENTER)
+   image(crabImage,noseTipX,noseTipY+100,crabSize,crabSize)
+  pop()
+
+
+
+
+ strokeWeight(5)
+    fill(255);
     // fill(get(leftEyeCenterX, leftEyeCenterY))
+     stroke(255,0,0)
+    ellipse(leftEyeCenterX, leftEyeCenterY, leftEyeWidth+20, leftEyeHeight+20);
+    fill(0)
+      noStroke()
+    ellipse(leftEyeCenterX,leftEyeCenterY, 30, leftEyeHeight+10);
+   //righteye
+    fill(255);
+     stroke(255,0,0)
+    ellipse(rightEyeCenterX, rightEyeCenterY, rightEyeWidth+20, rightEyeHeight+20);
+    fill(0)
+       noStroke()
+    ellipse(rightEyeCenterX,rightEyeCenterY, 30, rightEyeHeight+10);
 
-    ellipse(leftEyeCenterX, leftEyeCenterY, leftEyeWidth, leftEyeHeight);
 
-    drawPoints(face.leftEye);
-    drawPoints(face.leftEyebrow);
-    drawPoints(face.lips);
-    drawPoints(face.rightEye);
-    drawPoints(face.rightEyebrow);
 
-    // drawX(rightEyeCenterX,rightEyeCenterY);
+
+    image(forefrontImage,0,0,1280,960)
+  // triangle(lefttriangleX1,lefttriangleY1,lefttriangleX2,lefttriangleY2, lefttriangleX3,lefttriangleY3)
+  // triangle(righttriangleX1,righttriangleY1,righttriangleX2,righttriangleY2, righttriangleX3,righttriangleY3)
+
+
+
+
+    // drawPoints(face.leftEye);
+    // drawPoints(face.leftEyebrow);
+    // drawPoints(face.lips);
+    // drawPoints(face.rightEye);
+    // drawPoints(face.rightEyebrow);
+
+    //  drawX(rightEyeCenterX,rightEyeCenterY);
     // drawX(leftEyeCenterX,leftEyeCenterY);
 
 
-    // drawX(noseTipX,noseTipY); 
+    //clownX(noseTipX,noseTipY); 
 
     // drawX(face.keypoints[332].x,face.keypoints[332].y);
     // drawX(face.keypoints[103].x,face.keypoints[103].y);
@@ -103,6 +170,17 @@ function drawX(X, Y) {
   line(X - 20, Y + 20, X + 20, Y - 20)
 
   pop()
+}
+
+function clownX(X,Y) {
+push()
+noStroke()
+  fill(255,0,0)
+  ellipse(X,Y, 70,70)
+
+
+pop()
+
 }
 
 

@@ -1,8 +1,10 @@
 // ----=  HANDS  =----
 /* load images here */
 function prepareInteraction() {
+  
   //bgImage = loadImage('/images/background.png');
 }
+
 
 function drawInteraction(faces, hands) {
   // hands part
@@ -18,21 +20,56 @@ function drawInteraction(faces, hands) {
     let indexFingerTipX = hand.index_finger_tip.x;
     let indexFingerTipY = hand.index_finger_tip.y;
 
+    let indexFingerPipX = hand.index_finger_pip.x;
+    let indexFingerPipY = hand.index_finger_pip.y;
+
+    let indexFingerDipX = hand.index_finger_dip.x;
+    let indexFingerDipY = hand.index_finger_dip.y;
+
+    let middleFingerTipX = hand.middle_finger_tip.x;
+    let middleFingerTipY = hand.middle_finger_tip.y;
+
+    let ringFingerTipX = hand.ring_finger_tip.x;
+    let ringFingerTipY = hand.ring_finger_tip.y;
+
+    let wristX = hand.wrist.x;
+    let wristY = hand.wrist.y;
+
+
     //  let pinkyFingerTipX = hand.pinky_finger_tip.x;
     //  let pinkyFingerTipY = hand.pinky_finger_tip.y;
 
     /*
     Start drawing on the hands here
     */
+   
+   chameleonHandPuppet(hand)
 
-    fill(225, 225, 0);
+   noStroke()
+    fill(23, 79, 130)//blue
     ellipse(indexFingerTipX, indexFingerTipY, 30, 30);
+    ellipse(indexFingerPipX,indexFingerPipY, 50,50)
+    ellipse(indexFingerDipX,indexFingerDipY,20,20)
+
+    eye(indexFingerTipX, indexFingerTipY);
+   eye(middleFingerTipX, middleFingerTipY);
+
+   ellipse(wristX,wristY)
+
+   
+
+    // noStroke()
+    // let middleofHandX = (middleFingerTipX + wristX) /2
+    // let middleofHandY = (middleFingerTipY + wristY) /2
+    // eye(middleofHandX,middleofHandY)
+    //try figure out making it bigger depending on hand extention
+   
 
     // drawPoints(hand)
 
     //fingerPuppet(indexFingerTipX, indexFingerTipY);
 
-    //chameleonHandPuppet(hand)
+    
 
     /*
     Stop drawing on the hands here
@@ -44,7 +81,14 @@ function drawInteraction(faces, hands) {
 
 
 
-
+function eye (x,y){
+  fill(111, 197, 214)//lightblue
+  ellipse (x,y,100,50)
+  fill(23, 79, 130)//mid blue
+  ellipse(x,y, 40,40)
+  fill(0)
+  ellipse(x,y,20,20)
+}
 
 
 function fingerPuppet(x, y) {
@@ -82,6 +126,7 @@ function chameleonHandPuppet(hand) {
   // Find the index finger tip and thumb tip
   // let finger = hand.index_finger_tip;
 
+
   let finger = hand.middle_finger_tip; // this finger now contains the x and y infomation! you can access it by using finger.x 
   let thumb = hand.thumb_tip;
 
@@ -92,9 +137,10 @@ function chameleonHandPuppet(hand) {
   let pinch = dist(finger.x, finger.y, thumb.x, thumb.y);
 
   // This circle's size is controlled by a "pinch" gesture
-  fill(0, 255, 0, 200);
-  stroke(0);
-  strokeWeight(2);
+  fill(255)
+ // fill(0, 255, 0, 200);
+ // stroke(0);
+  //strokeWeight(2);
   circle(centerX, centerY, pinch);
 
   let indexFingerTipX = hand.index_finger_tip.x;
@@ -132,3 +178,4 @@ function drawPoints(feature) {
   pop()
 
 }
+

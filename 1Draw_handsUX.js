@@ -40,8 +40,9 @@ function drawInteraction(faces, hands) {
     Start drawing on the hands here
     */
     if (hand.handedness === "Left") {
-      Yvalue = hand.index_finger_tip.y; // this will stay as zer untill the program sees a left hand 
+      Yvalue = hand.index_finger_tip.y; // this will stay as zero untill the program sees a left hand 
     }
+    
 
 
     if (hand.handedness === "Right") { // draw when pinching right hand 
