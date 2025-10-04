@@ -1,9 +1,13 @@
 // ----=  HANDS  =----
 function prepareInteraction() {
   //bgImage = loadImage('/images/background.png');
-    crabImage = loadImage('images/crabtest.png');
-   bgImage = loadImage('images/background test.png');
-   forefrontImage = loadImage('images/forefront test.png');
+    crabImage = loadImage('images/redcrab.png');
+   bgImage = loadImage('images/background 1.png');
+   forefrontImage = loadImage('images/foreground.png');
+   crabImage2 =  loadImage('images/greencrab.png');
+   tatcrabImage =  loadImage('images/tatcrab.png');
+   partycrabImage =  loadImage('images/partycrab.png');
+   doublecrabImage =  loadImage('images/doublecrab.png');
 }
 
 function drawInteraction(faces, hands) {
@@ -61,8 +65,8 @@ function drawInteraction(faces, hands) {
     let noseTipX = face.keypoints[4].x;
     let noseTipY = face.keypoints[4].y;
 
-     let testX = face.keypoints[358].x;
-    let testY = face.keypoints[358].y;
+     let testX = face.keypoints[440].x;
+    let testY = face.keypoints[440].y;
 
 
     // console.log(face);
@@ -81,10 +85,10 @@ function drawInteraction(faces, hands) {
     Start drawing on the face here
     */
 image(bgImage,0,0,1280,960)
-  strokeWeight(20)
+  strokeWeight(15)
   stroke(0)
   line(testX,testY,leftEyeCenterX,leftEyeCenterY)
-
+ line(testX,testY,rightEyeCenterX,rightEyeCenterY)
 
    let eyedist = dist(leftEyeCenterX,leftEyeCenterY,rightEyeCenterX,rightEyeCenterY)
    console.log(eyedist) //210 and 70
@@ -92,9 +96,29 @@ image(bgImage,0,0,1280,960)
   
   push()
    imageMode(CENTER)
-   image(crabImage,noseTipX,noseTipY+100,crabSize,crabSize)
+   image(crabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()
 
+if (key==='r'){
+   push()
+   imageMode(CENTER)
+   image(crabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
+  pop()  
+}
+
+if (key==='t'){
+   push()
+   imageMode(CENTER)
+   image(tatcrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
+  pop()  
+}
+
+if (key==='p'){
+   push()
+   imageMode(CENTER)
+   image(partycrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
+  pop()  
+}
 
 
 
@@ -105,7 +129,7 @@ image(bgImage,0,0,1280,960)
     ellipse(leftEyeCenterX, leftEyeCenterY, leftEyeWidth+20, leftEyeHeight*3);
     fill(0)
       noStroke()
-    ellipse(leftEyeCenterX,leftEyeCenterY, 30, leftEyeHeight);
+    ellipse(leftEyeCenterX,leftEyeCenterY, 30, leftEyeHeight+10);
    //righteye
     fill(255);
      stroke(255,0,0)
