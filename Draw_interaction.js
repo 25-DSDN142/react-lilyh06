@@ -8,9 +8,18 @@ function prepareInteraction() {
    tatcrabImage =  loadImage('images/tatcrab.png');
    partycrabImage =  loadImage('images/partycrab.png');
    doublecrabImage =  loadImage('images/doublecrab.png');
+   clawcrabImage =  loadImage('images/clawcrab.png');
+   clawcrab2Image =  loadImage('images/clawcrab2.png');
+   nemoImage =  loadImage('images/nemo.png');
+  doryImage =  loadImage('images/dory.png');
+  fishMove = 960;
+  Yvalue = 0;
+
 }
 
 function drawInteraction(faces, hands) {
+
+image(bgImage,0,0,1280,960)
 
   // hands part
   // USING THE GESTURE DETECTORS (check their values in the debug menu)
@@ -29,11 +38,22 @@ function drawInteraction(faces, hands) {
     /*
     Start drawing on the hands here
     */
+  
+ if(detectHandGesture = "Open Palm"){
+      image(doryImage,fishMove,850,200,100)
+fishMove = fishMove-1;
+      //animate a bunch of these fish to swim past if they see thumbs up??
+    }
+    if(fishMove <=100){ 
+   fishMove = 960;
+}
+if (hand.handedness === "Left") {
 
-    // pinchCircle(hand)
-    fill(225, 225, 0);
-    ellipse(indexFingerTipX, indexFingerTipY, 30, 30);
-
+    push()
+   imageMode(CENTER)
+   image(nemoImage,indexFingerTipX,indexFingerTipY,150,100)
+   pop() 
+}
     /*
     Stop drawing on the hands here
     */
@@ -65,9 +85,18 @@ function drawInteraction(faces, hands) {
     let noseTipX = face.keypoints[4].x;
     let noseTipY = face.keypoints[4].y;
 
-     let testX = face.keypoints[440].x;
-    let testY = face.keypoints[440].y;
+    let LeyeStemX = face.keypoints[423].x;
+    let LeyeStemY = face.keypoints[423].y;
 
+    let ReyeStemX = face.keypoints[203].x;
+    let ReyeStemY = face.keypoints[203].y;
+
+    let toplipX = face.keypoints[12].x;
+    let toplipY = face.keypoints[12].y;
+    let bottomlipX = face.keypoints[14].x;
+    let bottomlipY = face.keypoints[14].y;
+
+  
 
     // console.log(face);
     /*
@@ -84,25 +113,51 @@ function drawInteraction(faces, hands) {
     /*
     Start drawing on the face here
     */
-image(bgImage,0,0,1280,960)
-  strokeWeight(15)
+
+
+
+
+
+  strokeWeight(10)
   stroke(0)
-  line(testX,testY,leftEyeCenterX,leftEyeCenterY)
- line(testX,testY,rightEyeCenterX,rightEyeCenterY)
+  line(LeyeStemX,LeyeStemY,leftEyeCenterX,leftEyeCenterY)
+ line(ReyeStemX,ReyeStemY,rightEyeCenterX,rightEyeCenterY)
 
    let eyedist = dist(leftEyeCenterX,leftEyeCenterY,rightEyeCenterX,rightEyeCenterY)
    console.log(eyedist) //210 and 70
    let crabSize = map(eyedist,210,70,700,150)
   
+    let mouthopen = dist(toplipX,toplipY, bottomlipX,bottomlipY)
+   console.log(mouthopen) //1 and 90
+ 
+   if (mouthopen >= 20  && mouthopen <=50){
+     push()
+   imageMode(CENTER)
+   image(clawcrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
+  pop()  
+ }
+
+if (mouthopen < 20){
   push()
    imageMode(CENTER)
    image(crabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()
+ }
 
-if (key==='r'){
+if (mouthopen >= 50){
+  push()
+   imageMode(CENTER)
+   image(clawcrab2Image,noseTipX,noseTipY+75,crabSize+120,crabSize)
+  pop()
+ }
+
+
+
+//if (detectHandGesture = "Peace"){
+if (key==='p'){
    push()
    imageMode(CENTER)
-   image(crabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
+   image(partycrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()  
 }
 
@@ -113,45 +168,38 @@ if (key==='t'){
   pop()  
 }
 
-if (key==='p'){
-   push()
-   imageMode(CENTER)
-   image(partycrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
-  pop()  
-}
-
 
 
  strokeWeight(5)
-    fill(255);
+    fill(255, 218, 143);
     // fill(get(leftEyeCenterX, leftEyeCenterY))
-     stroke(255,0,0)
+     stroke(117, 19, 1)
     ellipse(leftEyeCenterX, leftEyeCenterY, leftEyeWidth+20, leftEyeHeight*3);
-    fill(0)
+    fill(117, 19, 1)
       noStroke()
     ellipse(leftEyeCenterX,leftEyeCenterY, 30, leftEyeHeight+10);
    //righteye
-    fill(255);
-     stroke(255,0,0)
+    fill(255, 218, 143);
+     stroke(117, 19, 1)
     ellipse(rightEyeCenterX, rightEyeCenterY, rightEyeWidth+20, rightEyeHeight*3);
-    fill(0)
+    fill(117, 19, 1)
        noStroke()
     ellipse(rightEyeCenterX,rightEyeCenterY, 30, rightEyeHeight+10);
 
 
 
 
-    image(forefrontImage,0,0,1280,960)
+   
 
 
     // fill(225, 225, 0);
     // ellipse(leftEyeCenterX, leftEyeCenterY, leftEyeWidth, leftEyeHeight);
 
-    drawPoints(face.leftEye);
-    drawPoints(face.leftEyebrow);
-    drawPoints(face.lips);
-    drawPoints(face.rightEye);
-    drawPoints(face.rightEyebrow);
+    // drawPoints(face.leftEye);
+    // drawPoints(face.leftEyebrow);
+    // drawPoints(face.lips);
+    // drawPoints(face.rightEye);
+    // drawPoints(face.rightEyebrow);
     /*
     Stop drawing on the face here
     */
@@ -159,6 +207,7 @@ if (key==='p'){
   }
   //------------------------------------------------------
   // You can make addtional elements here, but keep the face drawing inside the for loop. 
+   image(forefrontImage,0,0,1280,960)
 }
 
 
