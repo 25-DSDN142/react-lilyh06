@@ -6,12 +6,13 @@ function prepareInteraction() {
    forefrontImage = loadImage('images/foreground.png');
    crabImage2 =  loadImage('images/greencrab.png');
    tatcrabImage =  loadImage('images/tatcrab.png');
-   partycrabImage =  loadImage('images/partycrab.png');
+   partycrabImage =  loadImage('images/partycrab overlay.png');
    doublecrabImage =  loadImage('images/doublecrab.png');
    clawcrabImage =  loadImage('images/clawcrab.png');
    clawcrab2Image =  loadImage('images/clawcrab2.png');
    nemoImage =  loadImage('images/nemo.png');
   doryImage =  loadImage('images/dory.png');
+  confettiImage =  loadImage('images/confetti.png');
   fishMove = 960;
   Yvalue = 0;
 
@@ -38,22 +39,27 @@ image(bgImage,0,0,1280,960)
     /*
     Start drawing on the hands here
     */
-  
+  if(hand.handedness ==="Right"){
  if(detectHandGesture = "Open Palm"){
-      image(doryImage,fishMove,850,200,100)
+      image(doryImage,fishMove-100,850,100,50)
+      image(doryImage,fishMove,650,200,100)
+      image(doryImage,fishMove,900,150,75)
 fishMove = fishMove-1;
       //animate a bunch of these fish to swim past if they see thumbs up??
     }
+  }
     if(fishMove <=100){ 
    fishMove = 960;
 }
-if (hand.handedness === "Left") {
 
+if (hand.handedness === "Left") {
     push()
    imageMode(CENTER)
    image(nemoImage,indexFingerTipX,indexFingerTipY,150,100)
    pop() 
 }
+
+
     /*
     Stop drawing on the hands here
     */
@@ -96,6 +102,10 @@ if (hand.handedness === "Left") {
     let bottomlipX = face.keypoints[14].x;
     let bottomlipY = face.keypoints[14].y;
 
+    let sideFaceX = face.keypoints[93].x;
+    let sideFaceY = face.keypoints[93].y;
+    let sideFaceX2 = face.keypoints[323].x;
+    let sideFaceY2 = face.keypoints[323].y;
   
 
     // console.log(face);
@@ -128,28 +138,50 @@ if (hand.handedness === "Left") {
    let crabSize = map(eyedist,210,70,700,150)
   
     let mouthopen = dist(toplipX,toplipY, bottomlipX,bottomlipY)
-   console.log(mouthopen) //1 and 90
+   //console.log(mouthopen) //1 and 90
  
-   if (mouthopen >= 20  && mouthopen <=50){
+   if (mouthopen >= 15  && mouthopen <=35){
      push()
    imageMode(CENTER)
    image(clawcrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()  
  }
 
-if (mouthopen < 20){
+if (mouthopen < 15){
   push()
    imageMode(CENTER)
    image(crabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()
  }
 
-if (mouthopen >= 50){
+
+if (mouthopen >= 35){
   push()
    imageMode(CENTER)
    image(clawcrab2Image,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()
  }
+ if (mouthopen >= 35){
+  push()
+   image(confettiImage,0,0,1280,960)
+  pop()
+ }
+
+ if (mouthopen >= 35){
+  push()
+   imageMode(CENTER)
+   image(partycrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
+  pop()
+ }
+
+ if (mouthopen >= 35){
+  push()
+   imageMode(CENTER)
+   image(partycrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
+  pop()
+ }
+ let faceSize = dist(sideFaceX,sideFaceY,sideFaceX2,sideFaceY2)
+   console.log(faceSize) //1 and 90
 
 
 
