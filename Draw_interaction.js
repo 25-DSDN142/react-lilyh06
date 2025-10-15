@@ -1,20 +1,27 @@
 // ----=  HANDS  =----
 function prepareInteraction() {
-  //bgImage = loadImage('/images/background.png');
-    crabImage = loadImage('images/redcrab.png');
-   bgImage = loadImage('images/background 1.png');
-   forefrontImage = loadImage('images/foreground.png');
-   crabImage2 =  loadImage('images/greencrab.png');
-   tatcrabImage =  loadImage('images/tatcrab.png');
-   partycrabImage =  loadImage('images/partycrab overlay.png');
-   doublecrabImage =  loadImage('images/doublecrab.png');
-   clawcrabImage =  loadImage('images/clawcrab.png');
-   clawcrab2Image =  loadImage('images/clawcrab2.png');
-   nemoImage =  loadImage('images/nemo.png');
-  doryImage =  loadImage('images/dory.png');
-  confettiImage =  loadImage('images/confetti.png');
-  fishMove = 960;
-  Yvalue = 0;
+//setting
+ crabImage = loadImage('images/redcrab.png');
+ bgImage = loadImage('images/background 1.png');
+ forefrontImage = loadImage('images/foreground.png');
+//crab
+ tatcrabImage =  loadImage('images/tatcrab overlay.png');
+ tatcrabImage2 =  loadImage('images/tatcrab fademid.png');
+ tatcrabImage1 =  loadImage('images/tatcrab fadelow.png');
+ partycrabImage =  loadImage('images/partycrab overlay.png');
+ clawcrabImage =  loadImage('images/clawcrab.png');
+ clawcrab2Image =  loadImage('images/clawcrab2.png');
+ //other
+ nemoImage =  loadImage('images/nemo.png');
+ doryImage =  loadImage('images/dory.png');
+ confettiImage =  loadImage('images/confetti.png');
+ octopusImage =  loadImage('images/octopus.png');
+ octopusImage2 =  loadImage('images/octopus full.png');
+
+
+ fishMove = 1000;
+ fishMove2 = 1280;
+ Yvalue = 0;
 
 }
 
@@ -39,26 +46,44 @@ image(bgImage,0,0,1280,960)
     /*
     Start drawing on the hands here
     */
+
+   //DORY
   if(hand.handedness ==="Right"){
- if(detectHandGesture = "Open Palm"){
-      image(doryImage,fishMove-100,850,100,50)
-      image(doryImage,fishMove,650,200,100)
+   if(detectHandGesture = "Open Palm"){
+      image(doryImage,fishMove,350,200,100)
       image(doryImage,fishMove,900,150,75)
-fishMove = fishMove-1;
-      //animate a bunch of these fish to swim past if they see thumbs up??
+      fishMove = fishMove-1;
     }
   }
     if(fishMove <=100){ 
-   fishMove = 960;
+   fishMove = 1000;
 }
 
+ if(hand.handedness ==="Right"){
+  if(detectHandGesture = "Open Palm"){
+      image(doryImage,fishMove2-200,850,100,50)
+       push()
+       fishMove2 = fishMove2-2.5;
+       pop()
+    }
+  }
+    if(fishMove2 <=100){ 
+   fishMove2 = 1280;
+}
+//NEMO
 if (hand.handedness === "Left") {
     push()
    imageMode(CENTER)
    image(nemoImage,indexFingerTipX,indexFingerTipY,150,100)
    pop() 
 }
-
+//OCTOPUS
+  if(detectHandGesture = "Thumbs Up"){
+      image(octopusImage,0,0,1280,960)
+  if (detectHandGesture = "Peace"){
+      image(octopusImage2,0,0,1280,960)
+    }
+    }
 
     /*
     Stop drawing on the hands here
@@ -123,29 +148,19 @@ if (hand.handedness === "Left") {
     /*
     Start drawing on the face here
     */
-
-
-
-
-
-  strokeWeight(10)
-  stroke(0)
-  line(LeyeStemX,LeyeStemY,leftEyeCenterX,leftEyeCenterY)
- line(ReyeStemX,ReyeStemY,rightEyeCenterX,rightEyeCenterY)
-
+//EYES
+   strokeWeight(10)
+   stroke(0)
+   line(LeyeStemX,LeyeStemY,leftEyeCenterX,leftEyeCenterY)
+//CRAB
+   line(ReyeStemX,ReyeStemY,rightEyeCenterX,rightEyeCenterY)
    let eyedist = dist(leftEyeCenterX,leftEyeCenterY,rightEyeCenterX,rightEyeCenterY)
-   console.log(eyedist) //210 and 70
+   //console.log(eyedist) //210 and 70
    let crabSize = map(eyedist,210,70,700,150)
-  
+//CRAB CLAWS
     let mouthopen = dist(toplipX,toplipY, bottomlipX,bottomlipY)
    //console.log(mouthopen) //1 and 90
- 
-   if (mouthopen >= 15  && mouthopen <=35){
-     push()
-   imageMode(CENTER)
-   image(clawcrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
-  pop()  
- }
+
 
 if (mouthopen < 15){
   push()
@@ -153,37 +168,62 @@ if (mouthopen < 15){
    image(crabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()
  }
+   if (mouthopen >= 15  && mouthopen <=50){
+     push()
+   imageMode(CENTER)
+   image(clawcrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
+  pop()  
+ }
 
-
-if (mouthopen >= 35){
+if (mouthopen >= 50){
   push()
    imageMode(CENTER)
    image(clawcrab2Image,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()
  }
- if (mouthopen >= 35){
+ if (mouthopen >= 50){
+  push()
+   image(confettiImage,0,-400,1280,960)
+  pop()
+ }
+  if (mouthopen >= 60){
   push()
    image(confettiImage,0,0,1280,960)
   pop()
  }
 
- if (mouthopen >= 35){
+ if (mouthopen >= 50){
   push()
    imageMode(CENTER)
    image(partycrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()
  }
 
- if (mouthopen >= 35){
+
+ let faceSize = dist(sideFaceX,sideFaceY, sideFaceX2,sideFaceY2)
+ //console.log(faceSize) //170, 390
+
+
+ if (faceSize >= 200 && faceSize <= 280){
   push()
    imageMode(CENTER)
-   image(partycrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
+   image(tatcrabImage2,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()
  }
- let faceSize = dist(sideFaceX,sideFaceY,sideFaceX2,sideFaceY2)
-   console.log(faceSize) //1 and 90
 
+ if (faceSize >= 280 && faceSize <= 340){
+  push()
+   imageMode(CENTER)
+   image(tatcrabImage2,noseTipX,noseTipY+75,crabSize+120,crabSize)
+  pop()
+ }
 
+ if (faceSize >= 340){
+  push()
+   imageMode(CENTER)
+   image(tatcrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
+  pop()
+ }
 
 //if (detectHandGesture = "Peace"){
 if (key==='p'){
