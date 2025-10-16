@@ -18,18 +18,18 @@ function prepareInteraction() {
  octopusImage =  loadImage('images/octopus.png');
  octopusImage2 =  loadImage('images/octopus full.png');
  octopusImage3 =  loadImage('images/octopus mid.png');
-  octopusImage4 =  loadImage('images/octopus close.png');
+ octopusImage4 =  loadImage('images/octopus close.png');
  inkImage =  loadImage('images/ink.png');
+
  fishMove = 1000;
  fishMove2 = 1280;
  Yvalue = 0;
-
 }
 
 function drawInteraction(faces, hands) {
-
+push()
 image(bgImage,0,0,1280,960)
-
+pop()
   // hands part
   // USING THE GESTURE DETECTORS (check their values in the debug menu)
   // detectHandGesture(hand) returns "Pinch", "Peace", "Thumbs Up", "Pointing", "Open Palm", or "Fist"
@@ -44,14 +44,17 @@ image(bgImage,0,0,1280,960)
     // console.log(hand);
     let indexFingerTipX = hand.index_finger_tip.x;
     let indexFingerTipY = hand.index_finger_tip.y;
+    let middleFingerDipX = hand.middle_finger_dip.x;
+    let middleFingerDipY = hand.middle_finger_dip.y;
     /*
     Start drawing on the hands here
     */
 
-   //DORY
+//DORY
+
   if(hand.handedness ==="Right"){
    if(detectHandGesture = "Open Palm"){
-      image(doryImage,fishMove,350,200,100)
+      image(doryImage,fishMove+100,350,200,100)
       image(doryImage,fishMove,900,150,75)
       fishMove = fishMove-1;
     }
@@ -63,28 +66,31 @@ image(bgImage,0,0,1280,960)
  if(hand.handedness ==="Right"){
   if(detectHandGesture = "Open Palm"){
       image(doryImage,fishMove2-200,850,100,50)
+       image(doryImage,fishMove2-300,150,50,25)
        push()
        fishMove2 = fishMove2-2.5;
        pop()
     }
   }
+  push()
     if(fishMove2 <=100){ 
    fishMove2 = 1280;
+  pop()
 }
 //NEMO
+push()
 if (hand.handedness === "Left") {
     push()
    imageMode(CENTER)
    image(nemoImage,indexFingerTipX,indexFingerTipY,150,100)
+   image(nemoImage,middleFingerDipX, middleFingerDipY,150,100)
    pop() 
 }
-
+pop()
     /*
     Stop drawing on the hands here
     */
   }
-
-
 
   //------------------------------------------------------------
   //facePart
@@ -94,19 +100,18 @@ if (hand.handedness === "Left") {
     if (showKeypoints) {
       drawPoints(face)
     }
-
-   let leftEyeCenterX = face.leftEye.centerX;
+   //eyes
+    let leftEyeCenterX = face.leftEye.centerX;
     let leftEyeCenterY = face.leftEye.centerY;
     let leftEyeWidth = face.leftEye.width;
     let leftEyeHeight = face.leftEye.height;
 
-    // Right eye
     let rightEyeCenterX = face.rightEye.centerX;
     let rightEyeCenterY = face.rightEye.centerY;
     let rightEyeWidth = face.rightEye.width;
     let rightEyeHeight = face.rightEye.height;
-
-
+   
+   //face  
     let noseTipX = face.keypoints[4].x;
     let noseTipY = face.keypoints[4].y;
 
@@ -125,7 +130,6 @@ if (hand.handedness === "Left") {
     let sideFaceY = face.keypoints[93].y;
     let sideFaceX2 = face.keypoints[323].x;
     let sideFaceY2 = face.keypoints[323].y;
-  
 
     // console.log(face);
     /*
@@ -144,7 +148,6 @@ if (hand.handedness === "Left") {
     */
 
 //OCTOPUS
-
  let faceSize = dist(sideFaceX,sideFaceY, sideFaceX2,sideFaceY2)
  //console.log(faceSize) //170, 390
 
@@ -160,7 +163,6 @@ if (faceSize >= 340 && faceSize <= 390){
 if (faceSize >= 390){
     image(octopusImage4,0,0,1280,960)
   }  
-
 //EYES
    strokeWeight(10)
    stroke(0)
@@ -174,31 +176,36 @@ if (faceSize >= 390){
 
 //CRAB CLAWS
    let mouthopen = dist(toplipX,toplipY, bottomlipX,bottomlipY)
-   console.log(mouthopen) //1 and 90
+   //console.log(mouthopen) //1 and 90
+
 if (mouthopen < 15){
   push()
    imageMode(CENTER)
    image(crabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()
  }
-   if (mouthopen >= 15  && mouthopen <=50){
+
+  if (mouthopen >= 15  && mouthopen <=50){
      push()
    imageMode(CENTER)
    image(clawcrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()  
  }
 
-if (mouthopen >= 50){
+ if (mouthopen >= 50){
   push()
    imageMode(CENTER)
    image(clawcrab2Image,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()
  }
+
+//PARTY CRAB
  if (mouthopen >= 50){
   push()
    image(confettiImage,0,-400,1280,960)
   pop()
  }
+
   if (mouthopen >= 60){
   push()
    image(confettiImage,0,0,1280,960)
@@ -212,6 +219,7 @@ if (mouthopen >= 50){
   pop()
  }
 
+//TATTOO CRAB
  if (faceSize >= 260 && faceSize <= 330){
   push()
    imageMode(CENTER)
@@ -234,24 +242,19 @@ if (mouthopen >= 50){
  }
 
 
-
-
-//if (detectHandGesture = "Peace"){
+//KEYS (BACKUPS)
 if (key==='p'){
    push()
    imageMode(CENTER)
    image(partycrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()  
 }
-
 if (key==='t'){
    push()
    imageMode(CENTER)
    image(tatcrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()  
 }
-
-
 
  strokeWeight(5)
     fill(255, 218, 143);
@@ -269,11 +272,8 @@ if (key==='t'){
        noStroke()
     ellipse(rightEyeCenterX,rightEyeCenterY, 30, rightEyeHeight+10);
 
-
-
- image(forefrontImage,0,0,1280,960)
-
-      if (faceSize >= 430){
+//INK
+  if (faceSize >= 430){
     image(inkImage,0,0,1280,960)
   }  
 
@@ -286,6 +286,7 @@ if (key==='t'){
     // drawPoints(face.lips);
     // drawPoints(face.rightEye);
     // drawPoints(face.rightEyebrow);
+
     /*
     Stop drawing on the face here
     */
@@ -293,8 +294,7 @@ if (key==='t'){
   }
   //------------------------------------------------------
   // You can make addtional elements here, but keep the face drawing inside the for loop. 
-  
-
+ image(forefrontImage,0,0,1280,960)
 }
 
 
@@ -332,7 +332,6 @@ function pinchCircle(hand) { // adapted from https://editor.p5js.org/ml5/sketche
   circle(centerX, centerY, pinch);
 
 }
-
 
 // This function draw's a dot on all the keypoints. It can be passed a whole face, or part of one. 
 function drawPoints(feature) {
