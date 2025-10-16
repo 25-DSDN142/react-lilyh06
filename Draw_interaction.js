@@ -11,14 +11,15 @@ function prepareInteraction() {
  partycrabImage =  loadImage('images/partycrab overlay.png');
  clawcrabImage =  loadImage('images/clawcrab.png');
  clawcrab2Image =  loadImage('images/clawcrab2.png');
- //other
+ //other3
  nemoImage =  loadImage('images/nemo.png');
  doryImage =  loadImage('images/dory.png');
  confettiImage =  loadImage('images/confetti.png');
  octopusImage =  loadImage('images/octopus.png');
  octopusImage2 =  loadImage('images/octopus full.png');
-
-
+ octopusImage3 =  loadImage('images/octopus mid.png');
+  octopusImage4 =  loadImage('images/octopus close.png');
+ inkImage =  loadImage('images/ink.png');
  fishMove = 1000;
  fishMove2 = 1280;
  Yvalue = 0;
@@ -77,13 +78,6 @@ if (hand.handedness === "Left") {
    image(nemoImage,indexFingerTipX,indexFingerTipY,150,100)
    pop() 
 }
-//OCTOPUS
-  if(detectHandGesture = "Thumbs Up"){
-      image(octopusImage,0,0,1280,960)
-  if (detectHandGesture = "Peace"){
-      image(octopusImage2,0,0,1280,960)
-    }
-    }
 
     /*
     Stop drawing on the hands here
@@ -148,20 +142,39 @@ if (hand.handedness === "Left") {
     /*
     Start drawing on the face here
     */
+
+//OCTOPUS
+
+ let faceSize = dist(sideFaceX,sideFaceY, sideFaceX2,sideFaceY2)
+ //console.log(faceSize) //170, 390
+
+if (faceSize >= 260 && faceSize <= 300 ){
+    image(octopusImage,0,0,1280,960)
+  }
+if (faceSize >= 300 && faceSize <= 340){
+    image(octopusImage2,0,0,1280,960)
+  }  
+if (faceSize >= 340 && faceSize <= 390){
+    image(octopusImage3,0,0,1280,960)
+  }  
+if (faceSize >= 390){
+    image(octopusImage4,0,0,1280,960)
+  }  
+
 //EYES
    strokeWeight(10)
    stroke(0)
    line(LeyeStemX,LeyeStemY,leftEyeCenterX,leftEyeCenterY)
+
 //CRAB
    line(ReyeStemX,ReyeStemY,rightEyeCenterX,rightEyeCenterY)
    let eyedist = dist(leftEyeCenterX,leftEyeCenterY,rightEyeCenterX,rightEyeCenterY)
    //console.log(eyedist) //210 and 70
    let crabSize = map(eyedist,210,70,700,150)
+
 //CRAB CLAWS
-    let mouthopen = dist(toplipX,toplipY, bottomlipX,bottomlipY)
-   //console.log(mouthopen) //1 and 90
-
-
+   let mouthopen = dist(toplipX,toplipY, bottomlipX,bottomlipY)
+   console.log(mouthopen) //1 and 90
 if (mouthopen < 15){
   push()
    imageMode(CENTER)
@@ -199,31 +212,29 @@ if (mouthopen >= 50){
   pop()
  }
 
+ if (faceSize >= 260 && faceSize <= 330){
+  push()
+   imageMode(CENTER)
+   image(tatcrabImage1,noseTipX,noseTipY+75,crabSize+120,crabSize)
+  pop()
+ }
 
- let faceSize = dist(sideFaceX,sideFaceY, sideFaceX2,sideFaceY2)
- //console.log(faceSize) //170, 390
-
-
- if (faceSize >= 200 && faceSize <= 280){
+ if (faceSize >= 330 && faceSize <= 360){
   push()
    imageMode(CENTER)
    image(tatcrabImage2,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()
  }
 
- if (faceSize >= 280 && faceSize <= 340){
-  push()
-   imageMode(CENTER)
-   image(tatcrabImage2,noseTipX,noseTipY+75,crabSize+120,crabSize)
-  pop()
- }
-
- if (faceSize >= 340){
+ if (faceSize >= 360){
   push()
    imageMode(CENTER)
    image(tatcrabImage,noseTipX,noseTipY+75,crabSize+120,crabSize)
   pop()
  }
+
+
+
 
 //if (detectHandGesture = "Peace"){
 if (key==='p'){
@@ -260,8 +271,11 @@ if (key==='t'){
 
 
 
+ image(forefrontImage,0,0,1280,960)
 
-   
+      if (faceSize >= 430){
+    image(inkImage,0,0,1280,960)
+  }  
 
 
     // fill(225, 225, 0);
@@ -279,7 +293,8 @@ if (key==='t'){
   }
   //------------------------------------------------------
   // You can make addtional elements here, but keep the face drawing inside the for loop. 
-   image(forefrontImage,0,0,1280,960)
+  
+
 }
 
 
